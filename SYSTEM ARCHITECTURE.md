@@ -15,10 +15,6 @@ Gemini 2.0 Flash API (Free Tier)
 ↓
 Summary Rendering & Categorization (Client-side)
 
-yaml
-Copy
-Edit
-
 ---
 
 ## Technology Stack
@@ -68,41 +64,7 @@ Edit
 - Renders bullet points with clear emojis for easy scanning by users.
 
 ### 5. Optional Persistence (LocalStorage)
-- Temporarily stores the user’s input and summaries to allow refreshing without data loss.
+- Temporarily stores the user's input and summaries to allow refreshing without data loss.
 - No backend or server-side database is currently used, preserving privacy.
 
 ---
-
-## Data Flow
-
-```plaintext
-[User Input]
-      ↓
-[Text Chunking & Preprocessing (Client)]
-      ↓
-[Summarization Request (Gemini 2.0 Flash API)]
-      ↓
-[Summary Response]
-      ↓
-[Categorization & UI Rendering (Client)]
-      ↓
-[User Views Clear, Emoji-coded Summary]
-Security and Privacy Considerations
-The Gemini API key is stored in frontend environment variables and used client-side.
-
-Since the app handles potentially sensitive legal documents, no data is stored on any server.
-
-Users are responsible for the confidentiality of their inputs.
-
-For production, consider proxying Gemini requests through a secure backend to protect API keys and implement rate limiting.
-
-Future Improvements
-Backend proxy service for secure API key management and enhanced rate limiting.
-
-Enhanced chunking using NLP sentence boundary detection.
-
-Browser extension for on-the-fly policy summarization.
-
-Support for PDF upload and extraction.
-
-Export summaries to Markdown or PDF formats.
