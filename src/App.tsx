@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
-import { chunkText, summarizeText, SummaryItem } from './services/geminiService';
+import { chunkText, summarizeText } from './services/geminiService';
+import type { SummaryItem } from './services/geminiService';
 import { loadInputText, loadSummary, saveInputText, saveSummary } from './services/storageService';
 import SummaryResults from './components/SummaryResults';
 import TextInput from './components/TextInput';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import AnimatedBackground from './components/AnimatedBackground';
 
 function App() {
   const [inputText, setInputText] = useState<string>('');
@@ -81,10 +83,11 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-transparent flex flex-col relative overflow-hidden">
+      <AnimatedBackground />
       <Header />
       
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 flex-grow">
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 flex-grow z-10">
         <div className="px-4 py-6 sm:px-0">
           <TextInput
             inputText={inputText}
