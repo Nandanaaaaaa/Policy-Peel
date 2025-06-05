@@ -1,82 +1,88 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// Initialize with your API key (store securely in .env for real projects)
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+
 // Types for our API responses
 export interface SummaryItem {
   type: 'safe' | 'warning' | 'danger';
   text: string;
 }
 
-// This is a placeholder for the actual Gemini API integration
-// In a real implementation, you would need to:
-// 1. Get an API key from Google's Gemini platform
-// 2. Make proper API calls with error handling
-// 3. Process the responses appropriately
-
-export const summarizeText = async (text: string): Promise<SummaryItem[]> => {
-  // For demonstration purposes, we're simulating an API call
-  // In a real implementation, you would call the Gemini API here
-  console.log('Processing text chunk:', text.substring(0, 100) + '...');
-  
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  
-  // This is where you would make the actual API call to Gemini
-  // const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${API_KEY}`
-  //   },
-  //   body: JSON.stringify({
-  //     contents: [{
-  //       parts: [{
-  //         text: `Summarize the following legal text into clear, easy-to-understand bullet points. 
-  //                Categorize each point as either SAFE (✅), WARNING (⚠️), or DANGER (❌).
-  //                SAFE points are neutral or positive for the user.
-  //                WARNING points require caution or attention.
-  //                DANGER points are potentially harmful or very concerning.
-  //                Here's the text to summarize: ${text}`
-  //       }]
-  //     }]
-  //   })
-  // });
-  // const data = await response.json();
-  // Process the response and extract the categorized bullet points
-  
-  // For now, return mock data based on keywords in the text
-  const mockResults: SummaryItem[] = [];
-  
-  // Simple keyword-based classification for demonstration
-  if (text.toLowerCase().includes('cancel') || text.toLowerCase().includes('terminate')) {
-    mockResults.push({ 
-      type: 'safe', 
-      text: 'You can cancel your subscription at any time.' 
-    });
-  }
-  
-  if (text.toLowerCase().includes('data') && text.toLowerCase().includes('share')) {
-    mockResults.push({ 
-      type: 'warning', 
-      text: 'Your data may be shared with third-party partners.' 
-    });
-  }
-  
-  if (text.toLowerCase().includes('change') && text.toLowerCase().includes('terms')) {
-    mockResults.push({ 
-      type: 'danger', 
-      text: 'The company reserves the right to change terms without notification.' 
-    });
-  }
-  
-  // If no keywords matched, provide some generic results
-  if (mockResults.length === 0) {
-    mockResults.push(
-      { type: 'safe', text: 'Standard terms of service apply to your usage of the service.' },
-      { type: 'warning', text: 'Some features may require additional permissions or data access.' },
-      { type: 'danger', text: 'Violation of terms may result in account termination without notice.' }
-    );
-  }
-  
-  return mockResults;
+/**
+ * Cleans text by removing bullet points and leading/trailing whitespace
+ */
+const cleanText = (text: string): string => {
+  // Remove any bullet points (*, -, •, or numbers followed by dots)
+  return text
+    .replace(/^[\s*•\-–—]+|^\d+\.\s*/g, '')
+    .replace(/^\[.*?\]\s*/g, '') // Remove any remaining category tags
+    .trim();
 };
+
+/**
+ * Summarizes text using the Gemini API and categorizes the results
+ * @param text The text to summarize
+ * @returns Array of categorized summary items
+ */
+export async function summarizeText(text: string): Promise<SummaryItem[]> {
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    
+    // Create a prompt that instructs Gemini to summarize and categorize
+    const prompt = `
+      Summarize the following legal/policy text into key bullet points.
+      For each point, categorize it as one of:
+      - SAFE: for neutral or positive items
+      - WARNING: for items that need attention or are somewhat concerning
+      - DANGER: for concerning, potentially harmful, or very restrictive items
+      
+      Format each point as: "[CATEGORY]: point summary"
+      DO NOT include bullet points, asterisks, or other markers at the beginning of each line.
+      
+      Here's the text to summarize:
+      ${text}
+    `;
+    
+    const result = await model.generateContent(prompt);
+    const summaryText = result.response.text();
+    
+    // Parse the response into SummaryItem objects
+    const summaryItems: SummaryItem[] = [];
+    const lines = summaryText.split('\n').filter(line => line.trim().length > 0);
+    
+    for (const line of lines) {
+      // Look for category prefixes in the response
+      if (line.includes('SAFE:')) {
+        summaryItems.push({
+          type: 'safe',
+          text: cleanText(line.replace(/SAFE:/, ''))
+        });
+      } else if (line.includes('WARNING:')) {
+        summaryItems.push({
+          type: 'warning',
+          text: cleanText(line.replace(/WARNING:/, ''))
+        });
+      } else if (line.includes('DANGER:')) {
+        summaryItems.push({
+          type: 'danger',
+          text: cleanText(line.replace(/DANGER:/, ''))
+        });
+      } else if (line.match(/^[-•*]\s*/) || line.length > 15) {
+        // Handle bullets or longer text that might be summaries without proper categorization
+        summaryItems.push({
+          type: 'warning', // Default to warning for uncategorized points
+          text: cleanText(line)
+        });
+      }
+    }
+    
+    return summaryItems;
+  } catch (error) {
+    console.error('Error calling Gemini API:', error);
+    return [{ type: 'danger', text: 'Failed to generate summary. Please try again.' }];
+  }
+}
 
 // Function to chunk text for API processing (moved from App.tsx)
 export const chunkText = (text: string): string[] => {

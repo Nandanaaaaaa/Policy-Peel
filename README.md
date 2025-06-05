@@ -18,6 +18,7 @@ Policy Peel is a simple web application designed to summarize complex legal term
 
 - Node.js (v14 or higher)
 - npm (v6 or higher)
+- Gemini API key (available from [Google AI Studio](https://aistudio.google.com/app/apikey))
 
 ### Installation
 
@@ -32,12 +33,17 @@ Policy Peel is a simple web application designed to summarize complex legal term
    npm install
    ```
 
-3. Start the development server:
+3. Create a `.env` file in the root directory with your Gemini API key:
+   ```
+   VITE_GEMINI_API_KEY=your_gemini_api_key_here
+   ```
+
+4. Start the development server:
    ```bash
    npm run dev
    ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+5. Open your browser and navigate to `http://localhost:5173`
 
 ## Usage
 

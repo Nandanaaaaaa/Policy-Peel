@@ -20,7 +20,7 @@ const SummaryResults = ({ summary }: SummaryResultsProps) => {
           <h3 className="text-lg font-medium text-green-700 mb-2">✅ Safe Points</h3>
           <ul className="space-y-2 pl-6">
             {safeItems.map((item, index) => (
-              <li key={`safe-${index}`} className="list-disc text-green-700">
+              <li key={`safe-${index}`} className="text-green-700">
                 <span className="text-gray-700">{item.text}</span>
               </li>
             ))}
@@ -34,7 +34,7 @@ const SummaryResults = ({ summary }: SummaryResultsProps) => {
           <h3 className="text-lg font-medium text-yellow-700 mb-2">⚠️ Warnings</h3>
           <ul className="space-y-2 pl-6">
             {warningItems.map((item, index) => (
-              <li key={`warning-${index}`} className="list-disc text-yellow-700">
+              <li key={`warning-${index}`} className="text-yellow-700">
                 <span className="text-gray-700">{item.text}</span>
               </li>
             ))}
@@ -48,7 +48,7 @@ const SummaryResults = ({ summary }: SummaryResultsProps) => {
           <h3 className="text-lg font-medium text-red-700 mb-2">❌ Red Flags</h3>
           <ul className="space-y-2 pl-6">
             {dangerItems.map((item, index) => (
-              <li key={`danger-${index}`} className="list-disc text-red-700">
+              <li key={`danger-${index}`} className="text-red-700">
                 <span className="text-gray-700">{item.text}</span>
               </li>
             ))}
