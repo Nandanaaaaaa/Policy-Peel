@@ -1,4 +1,4 @@
-import { SummaryItem } from './geminiService';
+import type { SummaryItem } from './geminiService';
 
 // Keys for localStorage
 const STORAGE_KEYS = {
