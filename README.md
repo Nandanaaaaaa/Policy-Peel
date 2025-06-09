@@ -1,92 +1,144 @@
-# 🧠 Policy Peel
+# 🧾 Policy Peel
 
-Policy Peel is a simple web application designed to summarize complex legal terms and privacy policies into clear, easy-to-understand bullet points. It leverages the free Gemini 2.0 Flash API for natural language summarization, providing users with concise plain-English explanations of legal text.
+<div align="center">
 
-## Features
+[![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-6.3-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-- **Simple Interface**: Paste text or upload a file containing legal terms
-- **Smart Summarization**: Processes complex legal language into plain English
-- **Categorized Results**: Color-coded bullet points to highlight important information:
-  - ✅ Safe/Neutral points
-  - ⚠️ Warnings/Points needing attention
-  - ❌ Red flags/Concerning clauses
-- **Client-side Processing**: All text processing happens in your browser for privacy
+**Transform complex legal terms into clear, actionable bullet points.**
 
-## Getting Started
+[Features](#-features) • [Quick Start](#-quick-start) • [Tech Stack](#-tech-stack) • [Roadmap](#-roadmap)
+
+</div>
+
+---
+
+## ✨ Features
+
+<table>
+  <tr>
+    <td width="50%">
+      <h3>💬 Simple Input</h3>
+      <ul>
+        <li>Paste text directly</li>
+        <li>Upload .txt files</li>
+        <li>Clean, minimalist interface</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3>🔍 Smart Analysis</h3>
+      <ul>
+        <li>AI-powered summarization</li>
+        <li>Processes complex legal language</li>
+        <li>Client-side for privacy</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <h3>🚦 Clear Categories</h3>
+      <ul>
+        <li>✅ Safe/Neutral points</li>
+        <li>⚠️ Warnings/Points needing attention</li>
+        <li>❌ Red flags/Concerning clauses</li>
+      </ul>
+    </td>
+    <td width="50%">
+      <h3>🔄 Easy Workflow</h3>
+      <ul>
+        <li>One-click processing</li>
+        <li>Copy results with a single click</li>
+        <li>Future export options</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+## 🚀 Quick Start
 
 ### Prerequisites
+- Node.js (v14+)
+- npm (v6+)
+- [Gemini API key](https://aistudio.google.com/app/apikey)
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
-- Gemini API key (available from [Google AI Studio](https://aistudio.google.com/app/apikey))
+### Setup
 
-### Installation
+```bash
+# Clone repository
+git clone https://github.com/yourusername/Policy-Peel.git
+cd Policy-Peel
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/Policy-Peel.git
-   cd Policy-Peel
-   ```
+# Install dependencies
+npm install
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+# Add API key to .env file
+echo "VITE_GEMINI_API_KEY=your_gemini_api_key_here" > .env
 
-3. Create a `.env` file in the root directory with your Gemini API key:
-   ```
-   VITE_GEMINI_API_KEY=your_gemini_api_key_here
-   ```
+# Start development server
+npm run dev
+```
 
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
+Visit `http://localhost:5173` in your browser.
 
-5. Open your browser and navigate to `http://localhost:5173`
+## 🔧 Tech Stack
 
-## Usage
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Technology</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td>Frontend</td>
+    <td>React 19 + TypeScript</td>
+    <td>UI components and type safety</td>
+  </tr>
+  <tr>
+    <td>Styling</td>
+    <td>Tailwind CSS 4</td>
+    <td>Utility-first styling</td>
+  </tr>
+  <tr>
+    <td>Build Tool</td>
+    <td>Vite 6</td>
+    <td>Fast development and optimized builds</td>
+  </tr>
+  <tr>
+    <td>AI</td>
+    <td>Gemini 2.0 Flash API</td>
+    <td>Natural language processing</td>
+  </tr>
+</table>
 
-1. Paste your Terms of Service or Privacy Policy text into the text area
-2. Alternatively, upload a .txt file containing the legal text
-3. Click the "Peel It! 🧠" button
-4. Review the summarized bullet points, categorized by safety level
-
-## Technology Stack
-
-- **Frontend**: React + TypeScript
-- **Styling**: Tailwind CSS
-- **Build Tool**: Vite
-- **API**: Gemini 2.0 Flash (Free Tier)
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 Policy-Peel/
 ├── public/            # Static assets
 ├── src/
 │   ├── assets/        # Images, fonts, etc.
+│   ├── components/    # React components
 │   ├── services/      # API and utility services
-│   │   └── geminiService.ts  # Gemini API integration
-│   ├── App.tsx        # Main application component
-│   ├── index.css      # Global styles
 │   └── main.tsx       # Application entry point
 ├── index.html         # HTML template
-└── package.json       # Project dependencies and scripts
+└── package.json       # Dependencies and scripts
 ```
 
-## Future Enhancements
+## 🔮 Roadmap
 
-- Export summaries to PDF/Markdown
-- Save previous summaries to LocalStorage
-- Highlight specific sections of concern in the original text
-- Add support for more document formats (PDF, DOC)
+- 📊 Export summaries to PDF/Markdown
+- 💾 Save previous summaries to LocalStorage
+- 🔎 Highlight specific sections of concern
+- 📄 Support for more document formats (PDF, DOC)
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- Gemini 2.0 Flash API for natural language processing capabilities
-- The open-source community for the amazing tools that made this project possible
+- [Gemini 2.0 Flash API](https://ai.google.dev/) for natural language processing
+- Open-source community for amazing tools and libraries
