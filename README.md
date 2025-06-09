@@ -1,4 +1,7 @@
-# 🧾 Policy Peel
+<div align="center">
+<h1> 🧾 Policy Peel
+</h1>
+</div>
 
 <div align="center">
 
